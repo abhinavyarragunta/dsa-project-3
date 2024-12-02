@@ -1,6 +1,7 @@
 # DSA Project 3
 
+Struggling to pick a movie that everyone will love? Meet Popcorn Picks—your ultimate movie night companion! Movie nights are a fantastic way to bring friends and family together without breaking the bank, but finding a film that suits everyone’s unique tastes can feel impossible.
 
-Are you struggling to choose the perfect movie that everyone will enjoy? Say hello to Popcorn Picks! Movie nights are a fantastic, low-cost way to bring friends and family together, but satisfying everyone's unique tastes can be a real challenge. That’s where our program comes in—delivering personalized movie recommendations tailored to suit a wide range of interests and preferences.
+Popcorn Picks makes movie selection stress-free and fun! By leveraging the powerful Letterboxd API, our program analyzes user accounts to understand viewing habits and preferences. Want an even more personalized touch? Additional inputs and optional web scraping allow us to refine recommendations further, diving deep into movie themes, genres, and actor connections to deliver spot-on suggestions.
 
-Using the Letterboxd API, Popcorn Picks gathers data from user accounts to identify viewing habits and preferences. Additional inputs from users or even web scraping (if needed) allow us to refine recommendations further by analyzing movie and actor similarities. With Popcorn Picks, finding the perfect movie for your next movie night has never been easier!
+With Popcorn Picks, every movie night becomes a hit. Discover how easy it is to create shared memories with the perfect film—tailored to everyone’s taste!
