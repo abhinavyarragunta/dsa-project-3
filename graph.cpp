@@ -1,5 +1,7 @@
 #include <iostream>
 #include <movie.cpp>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
 struct UserNode {
