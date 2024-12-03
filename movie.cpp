@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 class Movie {
@@ -23,8 +22,12 @@ public:
     }
 
     string getName() {return name;}
-    string getGenre() {return genre;}
+    vector<string> getGenre() {return genre;}
     double getRating() {return rating;}
     double getLength() {return length;}
+    int getYear() {return year;}
+    vector<string> getCast() {return cast;}
+    vector<string>getTags() {return tags;}
+
 
 };
