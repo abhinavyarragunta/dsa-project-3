@@ -6,14 +6,18 @@ using namespace std;
 class Movie {
 private:
     string name;
-    string genre;
+    vector<string> genre;
     double rating;
     double length;
+    int year;
+    vector<string> cast;
+    vector<string> tags;
 
 public:
-    Movie(string n, string g, double r = 0, double l = 0) {
+    Movie(string n, string g, double r = 0, double l = 0, int y = 0000) {
         name = n;
         genre = g;
+        year = y;
         rating = r < 0 ? 0 : r;
         length = l < 0 ? 0 : l;
     }
