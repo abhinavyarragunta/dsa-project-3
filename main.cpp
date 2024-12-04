@@ -30,7 +30,7 @@ int main() {
                      "            |_|  \n""";
 
         std::cout << "Please choose which data structure you would like to use: (1) hash map (2) graph\n";
-        std::cout << "Answer 1 or 2:\n\n";
+        std::cout << "Choose an option (1, 2)\n\n";
     
         std::cout << "1. Create Account\n";
         std::cout << "2. List Movies\n";
