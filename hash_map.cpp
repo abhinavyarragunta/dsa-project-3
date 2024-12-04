@@ -4,7 +4,7 @@
 using namespace std;
 
 //Constructors for keyValuePairs, no default constructor for movie. So initialization list must be used
-popPickTable::keyValuePair::keyValuePair() : key(""), value(Movie("","")) {}
+popPickTable::keyValuePair::keyValuePair() : key(""), value(Movie("")) {}
 
 popPickTable::keyValuePair::keyValuePair(string k, Movie v) : key(k), value(v) {}
 
@@ -88,3 +88,5 @@ Movie* popPickTable::search(const string& key)
 
     return nullptr; //not found
 }
+
+
