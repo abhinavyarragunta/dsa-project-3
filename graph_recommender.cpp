@@ -10,8 +10,8 @@ MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
     return popPicker;
 }
 
-int main() {
-    vector<Movie> allMovies = createMoviesFromAPI("movie_genre_description.txt");
+void useGraphRecommender(vector<Movie> allMovies) {
+    //vector<Movie> allMovies = createMoviesFromAPI("movie_genre_description.txt");
     MoviesGraph popPicker = createGraphWithGenreToMovieEdges(allMovies);
 
     cout << "Please enter a username: ";
@@ -61,6 +61,4 @@ int main() {
 
         else {cout << "Not a recognized command. Try again." << endl;}
     }
-
-    return 0;
 }

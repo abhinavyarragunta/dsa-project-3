@@ -41,16 +41,17 @@ vector<string> hashRecommender(popPickTable& movieTable, const unordered_set<str
 
 void useHashRecommender(vector<Movie> allMovies) {
     // Create and populate the hash table
+    cout << "Using hash recommender" << endl;
 
-
-    popPickTable movieTable(10);
+    popPickTable movieTable(1000);
 
     for(auto movie : allMovies)
     {
+        //cout << "Hashed something" << endl;
         movieTable.insert(movie.getName(), movie.getGenre());
     }
 
-
+    cout << "hashed everything" << endl;
    vector<unordered_set<string>> allUserGenres;
    while(true)
    {
