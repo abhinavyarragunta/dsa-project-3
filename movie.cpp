@@ -1,20 +1,24 @@
 #include <string>
-#include <vector>
 using namespace std;
 
 class Movie {
 private:
     string name;
-    vector<string> genres;
+    string genre;
+    string description;
 
 public:
-    Movie(string n) {name = n;}
+    Movie(string n, string g, string d) {
+        name = n;
+        genre = g;
+        description = d;
+    }
 
     bool operator==(const Movie& other) const {return (this->name == other.name);}
     bool operator<(const Movie& other) const {return (this->name < other.name);}
 
     string getName() {return name;}
-    vector<string> getGenres() {return genres;}
+    string getGenre() {return genre;}
+    string getDescription() {return description;}
 
-    void addGenre(string genre) {genres.push_back(genre);}
 };
