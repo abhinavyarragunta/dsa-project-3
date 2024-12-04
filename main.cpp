@@ -4,7 +4,7 @@
 
 int main() {
     // Replace "movies.csv" with the path to your CSV file
-    std::string csvFilePath = "../movies.csv";
+    std::string csvFilePath = "../moviedata.csv";
     std::unordered_map<std::string, std::vector<std::string>> movieMap = parseMovies(csvFilePath);
 
     // Example: Display the parsed data
