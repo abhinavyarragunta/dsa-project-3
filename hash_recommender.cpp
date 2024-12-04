@@ -39,14 +39,17 @@ vector<string> hashRecommender(popPickTable& movieTable, const unordered_set<str
     return recommendations;
 }
 
-int main() {
+void useHashRecommender(vector<Movie> allMovies) {
     // Create and populate the hash table
+
+
     popPickTable movieTable(10);
-    movieTable.insert("Jaws", "Horror");
-    movieTable.insert("Wicked", "Musical");
-    movieTable.insert("Se7en", "Thriller");
-    movieTable.insert("Finding Nemo", "Family");
-    movieTable.insert("Inception", "Sci-Fi");
+
+    for(auto movie : allMovies)
+    {
+        movieTable.insert(movie.getName(), movie.getGenre());
+    }
+
 
    vector<unordered_set<string>> allUserGenres;
    while(true)
@@ -69,7 +72,6 @@ int main() {
     {
         cout << "No user preferences entered." << endl;
         //Maybe print out entire list here
-        return 0;
     }
 
     unordered_set<string> sharedGenres = allUserGenres[0];
@@ -110,5 +112,4 @@ int main() {
         }
     }
 
-    return 0;
 }
