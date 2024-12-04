@@ -1,5 +1,4 @@
 #include <iostream>
-#include <movie.cpp>
 #include "hash_map.h"
 using namespace std;
 
