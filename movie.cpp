@@ -29,6 +29,4 @@ public:
     int getYear() {return year;}
     vector<string> getCast() {return cast;}
     vector<string>getTags() {return tags;}
-
-
 };
