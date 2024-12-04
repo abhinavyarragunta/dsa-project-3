@@ -1,37 +1,43 @@
-#include "parseMovies.h"
+#include "hash_map.h"
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <iostream>
+#include <vector>
+#include <string>
+#pragma once
+using namespace std;
 
-std::unordered_map<std::string, std::vector<std::string>> parseMovies(const std::string& csvFilePath) {
-    std::unordered_map<std::string, std::vector<std::string>> movieMap;
-    std::ifstream file(csvFilePath);
+vector<Movie> createMoviesFromAPI(string filename) {
+    vector<Movie> movies;
+    ifstream file(filename);
+    string line;
+    const string delimiter = " ::: ";
 
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << csvFilePath << std::endl;
-        return movieMap;
+        cerr << "Error: Unable to open file " << filename << endl;
+        return movies;
     }
 
-    std::string line;
-    std::getline(file, line); // Skip header line
+    while (getline(file, line)) {
+        vector<string> fields;
+        int start = 0;
+        int end = line.find(delimiter);
 
-    while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        std::string movie, genre;
-        std::vector<std::string> genres;
-        std::getline(ss, movie, ',');
-
-        while (std::getline(ss, genre, ',')) {
-            if (!genre.empty()) {
-                genres.push_back(genre);
-            }
+        while (end != string::npos) {
+            fields.push_back(line.substr(start, end - start));
+            start = end + delimiter.length();
+            end = line.find(delimiter, start);
         }
+        fields.push_back(line.substr(start));
 
-        if (!movie.empty()) {
-            movieMap[movie] = genres;
-        }
+        string title = fields[1];
+        string genre = fields[2];
+        string description = fields[3];
+
+        Movie newMovie(title, genre, description);
+        movies.push_back(newMovie);
     }
 
     file.close();
-    return movieMap;
+    return movies;
 }

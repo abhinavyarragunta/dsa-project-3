@@ -1,32 +1,17 @@
 #include "graph.cpp"
+using namespace std;
 
-vector<Movie> createAllMovies(unordered_map<string, vector<string>> APIdata) {
-    vector<Movie> allMovies;
-    for (auto i = APIdata.begin(); i != APIdata.end(); i++) {
-        Movie newMovie(i->first);
-        for (auto genre : i->second) newMovie.addGenre(genre);
-        allMovies.push_back(newMovie);
-    }
-    return allMovies;
-}
+
 
 MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
     MoviesGraph popPicker;
     for (auto movie: allMovies)
-        for (auto genre : movie.getGenres())
-            popPicker.addMovieToGenre(genre, movie);
+        popPicker.addMovieToGenre(movie.getGenre(), movie);
     return popPicker;
 }
 
-
 int main() {
-    //create list Movie objects with API data
-    unordered_map<string, vector<string>> APIData = {
-            {"Jaws", {"Horror", "Shark"}},
-            {"Wicked", {"Musical"}},
-            {"Se7en", {"Mystery", "Thriller"}}
-    };
-    vector<Movie> allMovies = createAllMovies(APIData);
+    vector<Movie> allMovies = createMoviesFromAPI("movie_genre_description.txt");
     MoviesGraph popPicker = createGraphWithGenreToMovieEdges(allMovies);
 
     cout << "Please enter a username: ";
@@ -43,6 +28,7 @@ int main() {
         else cout << "All genres added." << endl;
         preferredGenres.push_back(genre_input);
     }
+    for (auto pref : preferredGenres) cout << pref << endl;
     popPicker.addPreferences(username, preferredGenres);
 
     string input_action;
