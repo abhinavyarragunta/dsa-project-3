@@ -7,26 +7,35 @@ using namespace std;
 
 class popPickTable
 {
-    public:
-        popPickTable(long size = 10);
-        void insert(const string& key, const Movie& value);
-        Movie* search(const string& key);
-        void printTable() const;
     private:
         struct keyValuePair
         {
             string key;
-            Movie value;
+            vector<string> value;
             keyValuePair();
-            keyValuePair(string k, Movie v);
+            keyValuePair(string k, vector<string> v);
         };
 
-        vector<keyValuePair> table;
-        vector<bool> occupied;
+        
         long numElements;
         const double loadThreshold = 0.7;
 
         void rehash();
         int hashFunction(const string& key) const;
 
+    public:
+        popPickTable(long size = 10);
+        void insert(const string& key, vector<string> value);
+        string searchTitle(const string& key);
+        vector<string> searchGenres(const string& key);
+        void printTable() const;
+        int size();
+        vector<bool> occupied;
+        vector<keyValuePair> table;
+
+
+
+        
+
+        
 };

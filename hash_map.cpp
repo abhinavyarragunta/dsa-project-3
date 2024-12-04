@@ -4,9 +4,9 @@
 using namespace std;
 
 //Constructors for keyValuePairs, no default constructor for movie. So initialization list must be used
-popPickTable::keyValuePair::keyValuePair() : key(""), value(Movie("")) {}
+popPickTable::keyValuePair::keyValuePair() : key(""), value({}) {}
 
-popPickTable::keyValuePair::keyValuePair(string k, Movie v) : key(k), value(v) {}
+popPickTable::keyValuePair::keyValuePair(string k, vector<string> v) : key(k), value(v) {}
 
 popPickTable::popPickTable(long size)
 {
@@ -47,7 +47,7 @@ void popPickTable::rehash()
     }
 }
 
-void popPickTable::insert(const string& key, const Movie& value)
+void popPickTable::insert(const string& key, vector<string> value)
 {
     if((double)numElements/table.size() > loadThreshold)
     {
@@ -72,7 +72,7 @@ void popPickTable::insert(const string& key, const Movie& value)
     numElements++;
 }
 
-Movie* popPickTable::search(const string& key)
+string popPickTable::searchTitle(const string& key)
 {
     int index = hashFunction(key);
     int originalIndex = index;
@@ -81,12 +81,33 @@ Movie* popPickTable::search(const string& key)
     {
         if(table[index].key == key)
         {
-            return &table[index].value;
+            return table[index].key;
         }
         index = (index+1) % table.size();
     }
 
-    return nullptr; //not found
+    return "Not Found"; //not found
 }
 
+vector<string> popPickTable::searchGenres(const string& key)
+{
+    int index = hashFunction(key);
+    int originalIndex = index;
+
+    while(occupied[index])
+    {
+        if(table[index].key == key)
+        {
+            return table[index].value;
+        }
+        index = (index+1) % table.size();
+    }
+
+    return {};
+}
+
+int popPickTable::size()
+{
+    return table.size();
+}
 
