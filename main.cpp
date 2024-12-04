@@ -31,7 +31,10 @@ int main() {
 
         std::cout << "Please choose which data structure you would like to use: (1) hash map (2) graph\n";
         std::cout << "Choose an option (1, 2)\n\n";
-    
+        //todo: if 1, use hashRecommender function
+        //todo: if 2, use graphRecommender function
+
+        //options below are already implemented in respective functions
         std::cout << "1. Create Account\n";
         std::cout << "2. List Movies\n";
         std::cout << "3. Quit\n";

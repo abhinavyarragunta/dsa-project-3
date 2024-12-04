@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <unordered_map>
 #include <set>
 #include <unordered_set>
@@ -14,7 +15,7 @@ public:
     void addUser(string username) {
         if (UserToGenreAdjList.find(username) == UserToGenreAdjList.end())
             UserToGenreAdjList[username] = vector<string>();
-        else cout << "User " << username << " already exists." << endl << "Add more genres:" << endl;
+        else cout << "User " << username << " already exists." << endl;
     }
 
     void addGenreToUser(string user, string genre) {
@@ -53,6 +54,7 @@ public:
         for (auto genre : commonGenres)
             for (auto movie : GenreToMovieAdjList[genre])
                 commonMovies.insert(movie);
+        for (auto movie : commonMovies) cout << movie.getName() << endl;
         return commonMovies;
     }
 };
