@@ -19,7 +19,7 @@ class popPickTable
 
         
         long numElements;
-        const double loadThreshold = 0.7;
+        const double loadThreshold = 0.6;
 
         void rehash();
         int hashFunction(const string& key) const;
