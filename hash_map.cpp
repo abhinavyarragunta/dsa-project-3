@@ -5,7 +5,7 @@ using namespace std;
 //Constructors for keyValuePairs, no default constructor for movie. So initialization list must be used
 popPickTable::keyValuePair::keyValuePair() : key(""), value({}) {}
 
-popPickTable::keyValuePair::keyValuePair(string k, vector<string> v) : key(k), value(v) {}
+popPickTable::keyValuePair::keyValuePair(string k, string v) : key(k), value(v) {}
 
 popPickTable::popPickTable(long size)
 {
@@ -46,7 +46,7 @@ void popPickTable::rehash()
     }
 }
 
-void popPickTable::insert(const string& key, vector<string> value)
+void popPickTable::insert(const string& key, string value)
 {
     if((double)numElements/table.size() > loadThreshold)
     {
@@ -88,7 +88,7 @@ string popPickTable::searchTitle(const string& key)
     return "Not Found"; //not found
 }
 
-vector<string> popPickTable::searchGenres(const string& key)
+string popPickTable::searchGenres(const string& key)
 {
     int index = hashFunction(key);
     int originalIndex = index;

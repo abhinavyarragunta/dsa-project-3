@@ -15,10 +15,7 @@ vector<string> getAllGenres(popPickTable& movieTable)
     {
         if(movieTable.occupied[i])
         {
-            for(const string& genre: movieTable.table[i].value)
-            {
-                uniqueGenres.insert(genre);
-            }
+            uniqueGenres.insert(movieTable.table[i].value);
         }
     }
     return vector<string>(uniqueGenres.begin(), uniqueGenres.end());
@@ -31,15 +28,11 @@ vector<string> hashRecommender(popPickTable& movieTable, const unordered_set<str
     {
         if(movieTable.occupied[i])
         {
-            const vector<string>& movieGenres = movieTable.table[i].value;
-
-            for(const string& genre : movieGenres)
+            string movieGenre = movieTable.table[i].value;
+            if(sharedGenres.find(movieGenre) != sharedGenres.end())
             {
-                if(sharedGenres.find(genre) != sharedGenres.end())
-                {
-                    recommendations.push_back(movieTable.table[i].key);
-                    break;
-                }
+                recommendations.push_back(movieTable.table[i].key);
+                break;
             }
         }
     }
@@ -49,11 +42,11 @@ vector<string> hashRecommender(popPickTable& movieTable, const unordered_set<str
 int main() {
     // Create and populate the hash table
     popPickTable movieTable(10);
-    movieTable.insert("Jaws", {"Horror", "Shark"});
-    movieTable.insert("Wicked", {"Musical"});
-    movieTable.insert("Se7en", {"Mystery", "Thriller"});
-    movieTable.insert("Finding Nemo", {"Adventure", "Family"});
-    movieTable.insert("Inception", {"Thriller", "Sci-Fi"});
+    movieTable.insert("Jaws", "Horror");
+    movieTable.insert("Wicked", "Musical");
+    movieTable.insert("Se7en", "Thriller");
+    movieTable.insert("Finding Nemo", "Family");
+    movieTable.insert("Inception", "Sci-Fi");
 
    vector<unordered_set<string>> allUserGenres;
    while(true)

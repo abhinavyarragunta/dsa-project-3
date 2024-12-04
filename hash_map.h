@@ -11,9 +11,9 @@ class popPickTable
         struct keyValuePair
         {
             string key;
-            vector<string> value;
+            string value;
             keyValuePair();
-            keyValuePair(string k, vector<string> v);
+            keyValuePair(string k, string v);
         };
 
         
@@ -25,9 +25,9 @@ class popPickTable
 
     public:
         popPickTable(long size = 10);
-        void insert(const string& key, vector<string> value);
+        void insert(const string& key, string value);
         string searchTitle(const string& key);
-        vector<string> searchGenres(const string& key);
+        string searchGenres(const string& key);
         void printTable() const;
         int size();
         vector<bool> occupied;
