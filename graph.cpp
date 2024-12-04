@@ -4,6 +4,7 @@
 #include <set>
 #include <unordered_set>
 #include "movie.cpp"
+#pragma once
 using namespace std;
 
 class MoviesGraph {

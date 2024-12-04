@@ -1,9 +1,10 @@
-#include "graph.cpp"
+#include "hash_map.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
+#pragma once
 using namespace std;
 
 vector<Movie> createMoviesFromAPI(string filename) {
