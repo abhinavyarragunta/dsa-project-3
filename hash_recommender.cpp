@@ -43,7 +43,7 @@ void useHashRecommender(vector<Movie> allMovies) {
     // Create and populate the hash table
     cout << "Using hash recommender" << endl;
 
-    popPickTable movieTable(1000);
+    popPickTable movieTable(25000);
 
     for(auto movie : allMovies)
     {

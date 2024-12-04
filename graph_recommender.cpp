@@ -1,8 +1,6 @@
 #include "graph.cpp"
 using namespace std;
 
-
-
 MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
     MoviesGraph popPicker;
     for (auto movie: allMovies)
