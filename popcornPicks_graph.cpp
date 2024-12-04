@@ -21,7 +21,6 @@ MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
 
 int main() {
     //create list Movie objects with API data
-    //todo: collect API Data into hash map
     unordered_map<string, vector<string>> APIData = {
             {"Jaws", {"Horror", "Shark"}},
             {"Wicked", {"Musical"}},
