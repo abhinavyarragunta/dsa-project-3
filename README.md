@@ -1,4 +1,5 @@
 🎥 Popcorn Picks
+
 Introduction
 Are you stuck in the endless debate of what to watch on movie night? Struggling to find a movie that satisfies everyone’s tastes? Look no further—Popcorn Picks is here to save the day!
 
