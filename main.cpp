@@ -1,5 +1,6 @@
 #include <iostream>
 #include "parseMovies.h"
+#include "hash_map.h"
 
 int main() {
     // Replace "movies.csv" with the path to your CSV file
