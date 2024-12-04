@@ -8,6 +8,22 @@
 
 using namespace std;
 
+vector<string> getAllGenres(popPickTable& movieTable)
+{
+    unordered_set<string> uniqueGenres;
+    for(int i = 0; i < movieTable.size(); i++)
+    {
+        if(movieTable.occupied[i])
+        {
+            for(const string& genre: movieTable.table[i].value)
+            {
+                uniqueGenres.insert(genre);
+            }
+        }
+    }
+    return vector<string>(uniqueGenres.begin(), uniqueGenres.end());
+}
+
 vector<string> hashRecommender(popPickTable& movieTable, const unordered_set<string>& sharedGenres)
 {
     vector<string> recommendations;
@@ -39,45 +55,65 @@ int main() {
     movieTable.insert("Finding Nemo", {"Adventure", "Family"});
     movieTable.insert("Inception", {"Thriller", "Sci-Fi"});
 
-    cout << "User 1: Enter your favorite genres (type 'q' to finish):" << endl;
-    unordered_set<string> user1Genres;
-    string genre;
-    while (true) {
-        cin >> genre;
-        if (genre == "q") break;
-        user1Genres.insert(genre);
-    }
-
-    cout << "User 2: Enter your favorite genres (type 'q' to finish):" << endl;
-    unordered_set<string> user2Genres;
-    while (true) {
-        cin >> genre;
-        if (genre == "q") break;
-        user2Genres.insert(genre);
-    }
-
-    // Find shared genres between User 1 and User 2
-    unordered_set<string> sharedGenres;
-    for (const string& genre : user1Genres) {
-        if (user2Genres.find(genre) != user2Genres.end()) {
-            sharedGenres.insert(genre);
+   vector<unordered_set<string>> allUserGenres;
+   while(true)
+   {
+        cout << "Enter genres for a new user (type 'q' to finish user, 'done' to stop adding users):" << endl;
+        unordered_set<string> userGenres;
+        string genre;
+        while(true)
+        {
+            cin >> genre;
+            if(genre == "q") break;
+            if(genre == "done") break;
+            userGenres.insert(genre);
         }
-    }
+        if(genre == "done") break;
+        allUserGenres.push_back(userGenres);
+   }
 
-    if (sharedGenres.empty()) {
-        cout << "No shared genres found. No recommendations available." << endl;
+    if(allUserGenres.empty())
+    {
+        cout << "No user preferences entered." << endl;
+        //Maybe print out entire list here
         return 0;
     }
 
-    // Get movie recommendations
-    vector<string> recommendations = hashRecommender(movieTable, sharedGenres);
+    unordered_set<string> sharedGenres = allUserGenres[0];
+    for(int i = 1; i < allUserGenres.size(); i++)
+    {
+        unordered_set<string> tempSharedGenres;
+        for(const string& genre : sharedGenres)
+        {
+            if(allUserGenres[i].find(genre) != allUserGenres[i].end())
+            {
+                tempSharedGenres.insert(genre);
+            }
+        }
+        sharedGenres = tempSharedGenres;
+        if(sharedGenres.empty()) break;
+        
+    }
 
-    if (recommendations.empty()) {
-        cout << "No movies found for shared genres." << endl;
-    } else {
-        cout << "Recommended movies based on shared genres:" << endl;
-        for (const string& movie : recommendations) {
-            cout << "- " << movie << endl;
+    if(sharedGenres.empty())
+    {
+        cout << "No shared genres found among all users. No recommendations. :(" << endl;
+    }
+    else
+    {
+        vector<string> recommendations = hashRecommender(movieTable, sharedGenres);
+
+        if(recommendations.empty())
+        {
+            cout << "No movies found for shared genres." << endl;
+        }
+        else
+        {
+            cout << "Recommendeded movies based on shared genres:" << endl;
+            for(const string& movie : recommendations)
+            {
+                cout << "- " << movie << endl;
+            }
         }
     }
 
