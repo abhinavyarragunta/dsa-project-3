@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <vector>
+#include <string>
 #include "movie.cpp"
 using namespace std;
 
