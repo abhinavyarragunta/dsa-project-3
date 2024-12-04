@@ -9,9 +9,9 @@ using namespace std;
 class popPickTable
 {
     public:
-        popPickTable(long size = 10);
+        popPickTable(long size = 10, double threshold = 0.7);
         void insert(const string& key, const Movie& value);
-        Movie* search(const string& key);
+        void search(const string& key) const;
         void printTable() const;
     private:
         struct keyValuePair
@@ -25,7 +25,8 @@ class popPickTable
         vector<keyValuePair> table;
         vector<bool> occupied;
         long numElements;
-        const double loadThreshold = 0.7;
+        long capacity;
+        double loadThreshold;
 
         void rehash();
         int hashFunction(const string& key) const;

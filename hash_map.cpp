@@ -1,6 +1,7 @@
 #include <iostream>
 #include <movie.cpp>
 #include "hash_map.h"
+#include <functional>
 using namespace std;
 
 //Constructors for keyValuePairs, no default constructor for movie. So initialization list must be used
@@ -8,24 +9,18 @@ popPickTable::keyValuePair::keyValuePair() : key(""), value(Movie("","")) {}
 
 popPickTable::keyValuePair::keyValuePair(string k, Movie v) : key(k), value(v) {}
 
-popPickTable::popPickTable(long size)
+popPickTable::popPickTable(long size, double threshold)
 {
     table.resize(size);
     occupied.resize(size, false);
     numElements = 0;
+    loadThreshold =  threshold;
 }
 
 int popPickTable::hashFunction(const string& key) const
 {
-    long hash = 0;
-    int prime = 31; //Primes are good for hashing
-    int tableSize = table.size();
-
-    for(char ch : key)
-    {
-        hash = (hash*prime+ch) % tableSize; 
-    }
-    return hash;
+    int hashValue = static_cast<long>(std::hash<string>{}(key));
+    return hashValue % table.size();
 }
 
 void popPickTable::rehash()
@@ -46,46 +41,3 @@ void popPickTable::rehash()
         }
     }
 }
-
-void popPickTable::insert(const string& key, const Movie& value)
-{
-    if((double)numElements/table.size() > loadThreshold)
-    {
-        rehash();
-    }
-
-    int index = hashFunction(key);
-    int originalIndex = index;
-
-    while(occupied[index])
-    {
-        if(table[index].key == key)
-        {
-            table[index].value = value;
-            return;
-        }
-        index = (index + 1) % table.size();
-    }
-
-    table[index] = keyValuePair(key, value);
-    occupied[index] = true;
-    numElements++;
-}
-
-Movie* popPickTable::search(const string& key)
-{
-    int index = hashFunction(key);
-    int originalIndex = index;
-
-    while(occupied[index])
-    {
-        if(table[index].key == key)
-        {
-            return &table[index].value;
-        }
-        index = (index+1) % table.size();
-    }
-
-    return nullptr; //not found
-}
-
