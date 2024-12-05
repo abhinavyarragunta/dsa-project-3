@@ -3,13 +3,12 @@ using namespace std;
 
 MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
     MoviesGraph popPicker;
-    for (auto movie: allMovies)
+    for (auto movie : allMovies)
         popPicker.addMovieToGenre(movie.getGenre(), movie);
     return popPicker;
 }
 
 void useGraphRecommender(vector<Movie> allMovies) {
-    //vector<Movie> allMovies = createMoviesFromAPI("movie_genre_description.txt");
     MoviesGraph popPicker = createGraphWithGenreToMovieEdges(allMovies);
 
     cout << "Please enter a username: ";
@@ -20,13 +19,17 @@ void useGraphRecommender(vector<Movie> allMovies) {
     cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
     string genre_input;
     vector<string> preferredGenres;
-    while (genre_input != "q") {
+    while (true) {
         cin >> genre_input;
-        if (genre_input != "q") cout << "Added " << genre_input << endl;
-        else cout << "All genres added." << endl;
+        if (genre_input == "q") {
+            cout << "All genres added." << endl;
+            break;
+        }
+        cout << "Added " << genre_input << endl;
         preferredGenres.push_back(genre_input);
     }
-    for (auto pref : preferredGenres) cout << pref << endl;
+    for (auto pref : preferredGenres)
+        cout << pref << endl;
     popPicker.addPreferences(username, preferredGenres);
 
     string input_action;
@@ -36,37 +39,58 @@ void useGraphRecommender(vector<Movie> allMovies) {
         cout << "2. Add User" << endl;
         cout << "3. Quit" << endl;
         cin >> input_action;
+        cin.ignore(); // Clear buffer before getline usage
         if (input_action == "1") {
             vector<string> commonGenres = popPicker.getCommonPrefs();
             set<Movie> commonMovies = popPicker.getCommonMovies(commonGenres);
-            if (commonMovies.empty()) {cout << "No common movies found." << endl; continue;}
+            if (commonMovies.empty()) {
+                cout << "No common movies found." << endl;
+                continue;
+            }
             for (auto movie : commonMovies)
                 cout << "-" << movie.getName() << endl;
+
             while (true) {
                 cout << "Type movie name and year for more information or type 'q' to go back." << endl;
-                string targetMovie = " ";
-                getline(cin, targetMovie);
-                if (targetMovie == "q") break;
-                else for (auto movie : commonMovies) {
-                    if (movie.getName() == targetMovie) cout << movie.getDescription() << endl << endl;
+                string targetMovie;
+                getline(cin, targetMovie); // Use getline to read the movie name
+                if (targetMovie == "q")
+                    break;
+                else {
+                    bool found = false;
+                    for (auto movie : commonMovies) {
+                        if (movie.getName() == targetMovie) {
+                            cout << movie.getDescription() << endl << endl;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                        cout << "Movie not found. Please try again." << endl;
                 }
             }
         } else if (input_action == "2") {
-                cout << "Please enter a username: ";
-                cin >> username;
-                popPicker.addUser(username);
+            cout << "Please enter a username: ";
+            cin >> username;
+            popPicker.addUser(username);
 
-                cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
-                preferredGenres.clear();
-                genre_input = " ";
-                while (genre_input != "q") {
-                    cin >> genre_input;
-                    cout << "Added " << genre_input << endl;
-                    preferredGenres.push_back(genre_input);
+            cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
+            preferredGenres.clear();
+            genre_input = "";
+            while (true) {
+                cin >> genre_input;
+                if (genre_input == "q") {
+                    cout << "All genres added." << endl;
+                    break;
                 }
-                popPicker.addPreferences(username, preferredGenres);
-        } else if (input_action == "3") { cout << "Goodbye." << endl;}
-
-        else {cout << "Not a recognized command. Try again." << endl;}
+                cout << "Added " << genre_input << endl;
+                preferredGenres.push_back(genre_input);
+            }
+            popPicker.addPreferences(username, preferredGenres);
+        } else if (input_action == "3") {
+            cout << "Goodbye." << endl;
+        } else {
+            cout << "Not a recognized command. Try again." << endl;
+        }
     }
 }
