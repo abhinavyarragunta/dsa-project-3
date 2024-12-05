@@ -14,7 +14,6 @@ void useGraphRecommender(vector<Movie> allMovies) {
     cout << "Please enter a username: ";
     string username;
     cin >> username;
-    cin.ignore(); // Clear the input buffer after reading the username
     popPicker.addUser(username);
 
     cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
@@ -38,7 +37,6 @@ void useGraphRecommender(vector<Movie> allMovies) {
         cout << "2. Add User" << endl;
         cout << "3. Quit" << endl;
         cin >> input_action;
-        cin.ignore(); // Clear the buffer after reading input_action
         if (input_action == "1") {
             vector<string> commonGenres = popPicker.getCommonPrefs();
             set<Movie> commonMovies = popPicker.getCommonMovies(commonGenres);
@@ -52,7 +50,7 @@ void useGraphRecommender(vector<Movie> allMovies) {
             while (true) {
                 cout << "Type movie name and year for more information or type 'q' to go back." << endl;
                 string targetMovie;
-                getline(cin, targetMovie); // Use getline for the full movie name
+                cin >> targetMovie;
                 if (targetMovie == "q")
                     break;
                 else {
@@ -71,7 +69,6 @@ void useGraphRecommender(vector<Movie> allMovies) {
         } else if (input_action == "2") {
             cout << "Please enter a username: ";
             cin >> username;
-            cin.ignore(); // Clear the input buffer
             popPicker.addUser(username);
 
             cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
