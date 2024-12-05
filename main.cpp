@@ -5,7 +5,9 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
 vector<Movie> createMoviesFromAPI(string filename) {
     vector<Movie> movies;
@@ -61,9 +63,31 @@ int main() {
 
         string dataStructureChoice;
         cin >> dataStructureChoice;
-        if (dataStructureChoice == "1") useGraphRecommender(movies);
-        else if (dataStructureChoice == "2") useHashRecommender(movies);
+
+    
+        if (dataStructureChoice == "1")
+        {
+            auto start = high_resolution_clock::now();
+            useGraphRecommender(movies);
+            auto stop = high_resolution_clock::now();
+
+            auto duration = duration_cast<microseconds>(stop - start);
+
+            cout << "The graph implementation took: " << duration.count() << " microseconds" << endl;
+        }
+        else if (dataStructureChoice == "2")
+        {
+            auto start = high_resolution_clock::now();
+            useHashRecommender(movies);
+            auto stop = high_resolution_clock::now();
+
+            auto duration = duration_cast<microseconds>(stop - start);
+
+            cout << "The hashtable implementation took: " << duration.count() << " microseconds" << endl;
+
+        }
         else cout << "Data Structure not available." << endl;
 
     }
 }
+
