@@ -57,7 +57,7 @@ int main() {
                      "            |_|  \n""";
 
         std::cout << "Please choose which data structure you would like to use: (1) graph (2) hash map\n";
-        std::cout << "Choose an option (1, 2)\n\n";
+        std::cout << "Choose an option (1, 2)\n";
 
         string dataStructureChoice;
         cin >> dataStructureChoice;

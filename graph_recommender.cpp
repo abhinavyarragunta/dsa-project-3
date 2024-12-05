@@ -11,7 +11,7 @@ MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
 void useGraphRecommender(vector<Movie> allMovies) {
     MoviesGraph popPicker = createGraphWithGenreToMovieEdges(allMovies);
 
-    cout << "Please enter a username: ";
+    cout << "Please enter a username: " << endl;
     string username;
     cin >> username;
     popPicker.addUser(username);
@@ -73,7 +73,7 @@ void useGraphRecommender(vector<Movie> allMovies) {
             } while (targetMovie != "q");
 
         } else if (input_action == "2") {
-            cout << "Please enter a username: ";
+            cout << "Please enter a username:" << endl;
             cin >> username;
             popPicker.addUser(username);
 
