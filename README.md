@@ -50,6 +50,11 @@ The program will display a list of movie recommendations based on the shared gen
 
 **Graph vs. Hash Table Time Complexity: Hash Table is faster because of its insertion and search method being of constant computational complexity.**
 
+This is also proven experimentally through the use of #include <chrono> which allows us to track the time of each implementation.
+For the input using only 1 user and the genres selected being "drama" and "horror", the graph was shown to have a time of 23899531 microseconds, meanwhile the hashtable was shown to have a time of 15845764 microseconds.
+This shows that the hashtable was indeed faster than the graph.
+
+
 In order to run the code in this repository, first clone the repository on to your local device, this can be through downloading it as a zip.
 Next, if you want to use a g++ complier. Run the following commands in order to execute the program:
 
