@@ -19,6 +19,7 @@ The program uses a custom hash table implementation, optimized with linear probi
 You can input genre preferences for multiple users. The system will then calculate shared genres among all users and recommend movies accordingly.
 
 Using Popcorn Picks - Hashtable Implementation:
+
 Insert Movies: The program starts by loading a predefined dataset of movies into the hash table. Each movie is added with its title (key) and genre (value). This happens automatically when you run the program.
 Provide User Preferences Once the movies are loaded, you'll be prompted to enter the genres that you and your friends enjoy. You can input multiple users' genres.
 
