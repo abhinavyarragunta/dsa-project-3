@@ -33,6 +33,8 @@ void popPickTable::rehash()
     vector<keyValuePair> oldTable = table;
     vector<bool> oldOccupied = occupied;
 
+    table.clear();
+    occupied.clear();
     table.resize(newTableSize);
     occupied.resize(newTableSize, false);
     numElements = 0;
@@ -48,23 +50,28 @@ void popPickTable::rehash()
 
 void popPickTable::insert(const string& key, string value)
 {
-    if((double)numElements/table.size() > loadThreshold)
+    if(static_cast<double>(numElements)/table.size() >= loadThreshold)
     {
         rehash();
     }
 
     int index = hashFunction(key);
-    int originalIndex = index;
+    int startIndex = index;
 
-    while(occupied[index])
-    {
-        if(table[index].key == key)
-        {
+    do {
+        if (!occupied[index]) {
+            // Insert the new key-value pair
+            table[index] = keyValuePair(key, value);
+            occupied[index] = true;
+            numElements++;
+            return;
+        } else if (table[index].key == key) {
+            // Update existing key's value
             table[index].value = value;
             return;
         }
         index = (index + 1) % table.size();
-    }
+    } while (index != startIndex);
 
     table[index] = keyValuePair(key, value);
     occupied[index] = true;
