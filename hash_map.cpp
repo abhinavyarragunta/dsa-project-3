@@ -3,7 +3,7 @@
 using namespace std;
 
 //Constructors for keyValuePairs, no default constructor for movie. So initialization list must be used
-popPickTable::keyValuePair::keyValuePair() : key(""), value({}) {}
+popPickTable::keyValuePair::keyValuePair() : key(""), value("") {}
 
 popPickTable::keyValuePair::keyValuePair(string k, string v) : key(k), value(v) {}
 
@@ -14,17 +14,13 @@ popPickTable::popPickTable(long size)
     numElements = 0;
 }
 
-int popPickTable::hashFunction(const string& key) const
-{
-    long hash = 0;
-    int prime = 31; //Primes are good for hashing
-    int tableSize = table.size();
-
-    for(char ch : key)
-    {
-        hash = (hash*prime+ch) % tableSize; 
+//Inspired by DJB Hash Function
+int popPickTable::hashFunction(const string& key) const {
+    unsigned long hash = 5381;
+    for (char ch : key) {
+        hash = ((hash << 5) + hash) + ch;
     }
-    return hash;
+    return hash % table.size();
 }
 
 void popPickTable::rehash()
@@ -39,9 +35,9 @@ void popPickTable::rehash()
     occupied.resize(newTableSize, false);
     numElements = 0;
 
-    for(int i = 0; i < oldTable.size(); i++)
+    for (int i = 0; i < oldTable.size(); i++)
     {
-        if(oldOccupied[i])
+        if (i < oldOccupied.size() && oldOccupied[i])  // Ensure i is within bounds
         {
             insert(oldTable[i].key, oldTable[i].value);
         }
@@ -50,7 +46,7 @@ void popPickTable::rehash()
 
 void popPickTable::insert(const string& key, string value)
 {
-    if(static_cast<double>(numElements)/table.size() >= loadThreshold)
+    if (static_cast<double>(numElements) / table.size() >= loadThreshold)
     {
         rehash();
     }
@@ -65,7 +61,8 @@ void popPickTable::insert(const string& key, string value)
             occupied[index] = true;
             numElements++;
             return;
-        } else if (table[index].key == key) {
+        }
+        else if (table[index].key == key) {
             // Update existing key's value
             table[index].value = value;
             return;
@@ -83,16 +80,16 @@ string popPickTable::searchTitle(const string& key)
     int index = hashFunction(key);
     int originalIndex = index;
 
-    while(occupied[index])
+    while (occupied[index])
     {
-        if(table[index].key == key)
+        if (table[index].key == key)
         {
             return table[index].key;
         }
-        index = (index+1) % table.size();
+        index = (index + 1) % table.size();
     }
 
-    return "Not Found"; //not found
+    return "Not Found"; // not found
 }
 
 string popPickTable::searchGenres(const string& key)
@@ -100,13 +97,13 @@ string popPickTable::searchGenres(const string& key)
     int index = hashFunction(key);
     int originalIndex = index;
 
-    while(occupied[index])
+    while (occupied[index])
     {
-        if(table[index].key == key)
+        if (table[index].key == key)
         {
             return table[index].value;
         }
-        index = (index+1) % table.size();
+        index = (index + 1) % table.size();
     }
 
     return {};
@@ -116,4 +113,3 @@ int popPickTable::size()
 {
     return table.size();
 }
-
