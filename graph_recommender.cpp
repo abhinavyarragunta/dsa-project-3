@@ -1,115 +1,96 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include "hash_map.h"
-#include <algorithm>
-#include <iterator>
-#include <unordered_set>
-
+#include "graph.cpp"
 using namespace std;
 
-vector<string> getAllGenres(popPickTable& movieTable)
-{
-    unordered_set<string> uniqueGenres;
-    for(int i = 0; i < movieTable.size(); i++)
-    {
-        if(movieTable.occupied[i])
-        {
-            uniqueGenres.insert(movieTable.table[i].value);
-        }
-    }
-    return vector<string>(uniqueGenres.begin(), uniqueGenres.end());
+MoviesGraph createGraphWithGenreToMovieEdges(vector<Movie> allMovies) {
+    MoviesGraph popPicker;
+    for (auto movie : allMovies)
+        popPicker.addMovieToGenre(movie.getGenre(), movie);
+    return popPicker;
 }
 
-vector<string> hashRecommender(popPickTable& movieTable, const unordered_set<string>& sharedGenres)
-{
-    vector<string> recommendations;
-    for(int i = 0; i < movieTable.size(); i++)
-    {
-        if(movieTable.occupied[i])
-        {
-            string movieGenre = movieTable.table[i].value;
-            if(sharedGenres.find(movieGenre) != sharedGenres.end())
-            {
-                recommendations.push_back(movieTable.table[i].key);
+void useGraphRecommender(vector<Movie> allMovies) {
+    MoviesGraph popPicker = createGraphWithGenreToMovieEdges(allMovies);
+
+    cout << "Please enter a username: ";
+    string username;
+    cin >> username;
+    cin.ignore(); // Clear the input buffer after reading the username
+    popPicker.addUser(username);
+
+    cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
+    string genre_input;
+    vector<string> preferredGenres;
+    while (true) {
+        cin >> genre_input;
+        if (genre_input == "q") {
+            cout << "All genres added." << endl;
+            break;
+        }
+        cout << "Added " << genre_input << endl;
+        preferredGenres.push_back(genre_input);
+    }
+    popPicker.addPreferences(username, preferredGenres);
+
+    string input_action;
+    while (input_action != "3") {
+        cout << "Type the corresponding number for which action you want to take." << endl;
+        cout << "1. Recommend Movies" << endl;
+        cout << "2. Add User" << endl;
+        cout << "3. Quit" << endl;
+        cin >> input_action;
+        cin.ignore(); // Clear the buffer after reading input_action
+        if (input_action == "1") {
+            vector<string> commonGenres = popPicker.getCommonPrefs();
+            set<Movie> commonMovies = popPicker.getCommonMovies(commonGenres);
+            if (commonMovies.empty()) {
+                cout << "No common movies found." << endl;
+                continue;
             }
-        }
-    }
-    return recommendations;
-}
+            for (auto movie : commonMovies)
+                cout << "-" << movie.getName() << endl;
 
-void useHashRecommender(vector<Movie> allMovies) {
-    // Create and populate the hash table
-    cout << "Using hash recommender" << endl;
-
-    popPickTable movieTable(25000);
-
-    for(auto movie : allMovies)
-    {
-        //cout << "Hashed something" << endl;
-        movieTable.insert(movie.getName(), movie.getGenre());
-    }
-
-    cout << "hashed everything" << endl;
-   vector<unordered_set<string>> allUserGenres;
-   while(true)
-   {
-        cout << "Enter genres for a new user (type 'q' to finish user, 'done' to stop adding users):" << endl;
-        unordered_set<string> userGenres;
-        string genre;
-        while(true)
-        {
-            cin >> genre;
-            if(genre == "q") break;
-            if(genre == "done") break;
-            userGenres.insert(genre);
-        }
-        if(genre == "done") break;
-        allUserGenres.push_back(userGenres);
-   }
-
-    if(allUserGenres.empty())
-    {
-        cout << "No user preferences entered." << endl;
-        //Maybe print out entire list here
-    }
-
-    unordered_set<string> sharedGenres = allUserGenres[0];
-    for(int i = 1; i < allUserGenres.size(); i++)
-    {
-        unordered_set<string> tempSharedGenres;
-        for(const string& genre : sharedGenres)
-        {
-            if(allUserGenres[i].find(genre) != allUserGenres[i].end())
-            {
-                tempSharedGenres.insert(genre);
+            while (true) {
+                cout << "Type movie name and year for more information or type 'q' to go back." << endl;
+                string targetMovie;
+                getline(cin, targetMovie); // Use getline for the full movie name
+                if (targetMovie == "q")
+                    break;
+                else {
+                    bool found = false;
+                    for (auto movie : commonMovies) {
+                        if (movie.getName() == targetMovie) {
+                            cout << movie.getDescription() << endl << endl;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                        cout << "Movie not found. Please try again." << endl;
+                }
             }
-        }
-        sharedGenres = tempSharedGenres;
-        if(sharedGenres.empty()) break;
-        
-    }
+        } else if (input_action == "2") {
+            cout << "Please enter a username: ";
+            cin >> username;
+            cin.ignore(); // Clear the input buffer
+            popPicker.addUser(username);
 
-    if(sharedGenres.empty())
-    {
-        cout << "No shared genres found among all users. No recommendations. :(" << endl;
-    }
-    else
-    {
-        vector<string> recommendations = hashRecommender(movieTable, sharedGenres);
-
-        if(recommendations.empty())
-        {
-            cout << "No movies found for shared genres." << endl;
-        }
-        else
-        {
-            cout << "Recommendeded movies based on shared genres:" << endl;
-            for(const string& movie : recommendations)
-            {
-                cout << "- " << movie << endl;
+            cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
+            preferredGenres.clear();
+            genre_input = "";
+            while (true) {
+                cin >> genre_input;
+                if (genre_input == "q") {
+                    cout << "All genres added." << endl;
+                    break;
+                }
+                cout << "Added " << genre_input << endl;
+                preferredGenres.push_back(genre_input);
             }
+            popPicker.addPreferences(username, preferredGenres);
+        } else if (input_action == "3") {
+            cout << "Goodbye." << endl;
+        } else {
+            cout << "Not a recognized command. Try again." << endl;
         }
     }
-
 }
