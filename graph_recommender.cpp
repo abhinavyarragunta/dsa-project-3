@@ -19,15 +19,19 @@ void useGraphRecommender(vector<Movie> allMovies) {
     cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
     string genre_input;
     vector<string> preferredGenres;
-    while (true) {
+
+    do {
         cin >> genre_input;
-        if (genre_input == "q") {
-            cout << "All genres added." << endl;
-            break;
+        if (genre_input != "q") {
+            cout << "Added " << genre_input << endl;
+            preferredGenres.push_back(genre_input);
         }
-        cout << "Added " << genre_input << endl;
-        preferredGenres.push_back(genre_input);
-    }
+    } while (genre_input != "q");
+
+    cout << "All genres added." << endl;
+    for (auto pref : preferredGenres)
+        cout << pref << endl;
+
     popPicker.addPreferences(username, preferredGenres);
 
     string input_action = "";
@@ -37,6 +41,8 @@ void useGraphRecommender(vector<Movie> allMovies) {
         cout << "2. Add User" << endl;
         cout << "3. Quit" << endl;
         cin >> input_action;
+        cin.ignore(); // Clear buffer before getline usage
+
         if (input_action == "1") {
             vector<string> commonGenres = popPicker.getCommonPrefs();
             set<Movie> commonMovies = popPicker.getCommonMovies(commonGenres);
@@ -44,26 +50,28 @@ void useGraphRecommender(vector<Movie> allMovies) {
                 cout << "No common movies found." << endl;
                 continue;
             }
+
             for (auto movie : commonMovies)
                 cout << "-" << movie.getName() << endl;
 
-            string targetMovie = "";
-            while (targetMovie != "q") {
+            string targetMovie;
+            do {
                 cout << "Type movie name and year for more information or type 'q' to go back." << endl;
-                cin >> targetMovie;
-                if (targetMovie == "q") break;
-
-                bool found = false;
-                for (auto movie : commonMovies) {
-                    if (movie.getName() == targetMovie) {
-                        cout << movie.getDescription() << endl << endl;
-                        found = true;
-                        break;
+                getline(cin, targetMovie);
+                if (targetMovie != "q") {
+                    bool found = false;
+                    for (auto movie : commonMovies) {
+                        if (movie.getName() == targetMovie) {
+                            cout << movie.getDescription() << endl << endl;
+                            found = true;
+                            break;
+                        }
                     }
+                    if (!found)
+                        cout << "Movie not found. Please try again." << endl;
                 }
-                if (!found)
-                    cout << "Movie not found. Please try again." << endl;
-            }
+            } while (targetMovie != "q");
+
         } else if (input_action == "2") {
             cout << "Please enter a username: ";
             cin >> username;
@@ -71,17 +79,18 @@ void useGraphRecommender(vector<Movie> allMovies) {
 
             cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
             preferredGenres.clear();
-            genre_input = "";
-            while (genre_input != "q") {
+
+            do {
                 cin >> genre_input;
-                if (genre_input == "q") {
-                    cout << "All genres added." << endl;
-                    break;
+                if (genre_input != "q") {
+                    cout << "Added " << genre_input << endl;
+                    preferredGenres.push_back(genre_input);
                 }
-                cout << "Added " << genre_input << endl;
-                preferredGenres.push_back(genre_input);
-            }
+            } while (genre_input != "q");
+
+            cout << "All genres added." << endl;
             popPicker.addPreferences(username, preferredGenres);
+
         } else if (input_action == "3") {
             cout << "Goodbye." << endl;
         } else {
