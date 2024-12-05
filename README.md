@@ -48,3 +48,11 @@ If no common genres are found, the system will notify you and suggest trying aga
 The program will display a list of movie recommendations based on the shared genres. If no movies match the selected genres, the program will inform you that there are no recommendations at this time.
 
 **Graph vs. Hash Table Time Complexity: Hash Table is faster because of its insertion and search method being of constant computational complexity.**
+
+In order to run the code in this repository, first clone the repository on to your local device, this can be through downloading it as a zip.
+Next, if you want to use a g++ complier. Run the following commands in order to execute the program:
+"g++ main.cpp movie.cpp -c"
+"g++ main.o movie.o -o program"
+"program"
+
+We hope you enjoy the program and find some new movies to watch! 
