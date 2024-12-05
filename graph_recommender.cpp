@@ -30,7 +30,7 @@ void useGraphRecommender(vector<Movie> allMovies) {
     }
     popPicker.addPreferences(username, preferredGenres);
 
-    string input_action;
+    string input_action = "";
     while (input_action != "3") {
         cout << "Type the corresponding number for which action you want to take." << endl;
         cout << "1. Recommend Movies" << endl;
@@ -47,24 +47,22 @@ void useGraphRecommender(vector<Movie> allMovies) {
             for (auto movie : commonMovies)
                 cout << "-" << movie.getName() << endl;
 
-            while (true) {
+            string targetMovie = "";
+            while (targetMovie != "q") {
                 cout << "Type movie name and year for more information or type 'q' to go back." << endl;
-                string targetMovie;
                 cin >> targetMovie;
-                if (targetMovie == "q")
-                    break;
-                else {
-                    bool found = false;
-                    for (auto movie : commonMovies) {
-                        if (movie.getName() == targetMovie) {
-                            cout << movie.getDescription() << endl << endl;
-                            found = true;
-                            break;
-                        }
+                if (targetMovie == "q") break;
+
+                bool found = false;
+                for (auto movie : commonMovies) {
+                    if (movie.getName() == targetMovie) {
+                        cout << movie.getDescription() << endl << endl;
+                        found = true;
+                        break;
                     }
-                    if (!found)
-                        cout << "Movie not found. Please try again." << endl;
                 }
+                if (!found)
+                    cout << "Movie not found. Please try again." << endl;
             }
         } else if (input_action == "2") {
             cout << "Please enter a username: ";
@@ -74,7 +72,7 @@ void useGraphRecommender(vector<Movie> allMovies) {
             cout << "Enter your favorite movie genres. Enter 'q' when finished." << endl;
             preferredGenres.clear();
             genre_input = "";
-            while (true) {
+            while (genre_input != "q") {
                 cin >> genre_input;
                 if (genre_input == "q") {
                     cout << "All genres added." << endl;
