@@ -2,6 +2,19 @@
 Introduction:
 Are you having trouble deciding on a movie to watch with your friends or by yourself? Introducing Popcorn Picks! This program provides personalized movie recommendations based on your favorite genres. Whether you're watching solo or with friends, Popcorn Picks helps you find movies that align with your shared preferences. Simply enter your favorite genres, and Popcorn Picks will curate a list of movies that fit your needs!
 
+Graph Implementation Features:
+1. Movie Storage & Interconnected:
+Graph can store User, Genre, or Movie nodes in tripartite form. Users can only connect to Genres, and Genres can only connect to Movies.
+2. Multi-User Scale:
+New User nodes and edges to Genre nodes can be added in constant time complexity. The entire recommendation and intersection algorithm can account for any number of users and genres.
+
+Using Graph PopcornPicker:
+1. Create initial User Profile with username, list genre preferences and press 'q' when finished.
+2. Choose to Recommend Movies, Add User, Quit
+   Recommend Movies will list all movies with the genres that the users prefer
+   Add User will create new User Profile with same process (future movie recommendations will be from the intersection of all users' preferred genre)
+3. After Recommended Movie list, input a movie [Name (Year)] to return an in-depth description of the movie
+4. Repeat process
 
 Hashtable Implementation Features:
 1. Movie Storage & Management
@@ -34,3 +47,4 @@ Recommend movies that match these shared genres.
 If no common genres are found, the system will notify you and suggest trying again with different genres.
 The program will display a list of movie recommendations based on the shared genres. If no movies match the selected genres, the program will inform you that there are no recommendations at this time.
 
+**Graph vs. Hash Table Time Complexity: Hash Table is faster because of its insertion and search method being of constant computational complexity.**
