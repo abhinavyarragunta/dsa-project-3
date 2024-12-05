@@ -41,7 +41,16 @@ void useGraphRecommender(vector<Movie> allMovies) {
             set<Movie> commonMovies = popPicker.getCommonMovies(commonGenres);
             if (commonMovies.empty()) {cout << "No common movies found." << endl; continue;}
             for (auto movie : commonMovies)
-                cout << movie.getName() << endl;
+                cout << "-" << movie.getName() << endl;
+            while (true) {
+                cout << "Type movie name and year for more information or type 'q' to go back." << endl;
+                string targetMovie = " ";
+                getline(cin, targetMovie);
+                if (targetMovie == "q") break;
+                else for (auto movie : commonMovies) {
+                    if (movie.getName() == targetMovie) cout << movie.getDescription() << endl << endl;
+                }
+            }
         } else if (input_action == "2") {
                 cout << "Please enter a username: ";
                 cin >> username;
@@ -52,6 +61,7 @@ void useGraphRecommender(vector<Movie> allMovies) {
                 genre_input = " ";
                 while (genre_input != "q") {
                     cin >> genre_input;
+                    cout << "Added " << genre_input << endl;
                     preferredGenres.push_back(genre_input);
                 }
                 popPicker.addPreferences(username, preferredGenres);
