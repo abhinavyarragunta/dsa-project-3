@@ -1,4 +1,5 @@
-🎥 Popcorn Picks
+🎥 **Popcorn Picks**
+
 Introduction:
 Are you having trouble deciding on a movie to watch with your friends or by yourself? Introducing Popcorn Picks! This program provides personalized movie recommendations based on your favorite genres. Whether you're watching solo or with friends, Popcorn Picks helps you find movies that align with your shared preferences. Simply enter your favorite genres, and Popcorn Picks will curate a list of movies that fit your needs!
 
